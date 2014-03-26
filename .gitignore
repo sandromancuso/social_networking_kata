@@ -13,6 +13,8 @@ project/plugins/project/
 .scala_dependencies
 
 # IntelliJ IDEA
-.idea/*
+.idea/
 .idea_modules
 out/
+*.iml
+**/.idea
