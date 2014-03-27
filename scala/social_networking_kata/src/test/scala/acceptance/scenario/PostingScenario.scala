@@ -4,7 +4,8 @@ import acceptance.AcceptanceSpec
 import org.mockito.Mockito
 import org.mockito.Mockito._
 import com.codurance.socialnetworking.SocialNetworking
-import com.codurance.socialnetworking.user_interface.Console
+import com.codurance.socialnetworking.user_interface.{UserCommands, Console}
+import scala.collection.mutable
 
 class PostingScenario extends AcceptanceSpec {
 
@@ -35,22 +36,24 @@ class PostingScenario extends AcceptanceSpec {
 
 	def fixture = new {
 
+		val QUIT = "quit"
 		val console = mock[Console]
-		val socialNetworking = new SocialNetworking(console)
-		var consoleCommands: List[String] = List()
-		var expectedMessages: List[String] = List()
+		val socialNetworking = new SocialNetworking(console, new UserCommands)
+		var consoleCommands: mutable.MutableList[String] = mutable.MutableList()
+		var expectedMessages: mutable.MutableList[String] = mutable.MutableList()
 
 		def receives(userCommands: String*) = {
-			consoleCommands = consoleCommands ++ userCommands
-			Mockito.when(console.readline()).thenReturn(userCommands.head, userCommands.tail:_*)
+			consoleCommands ++= userCommands
 		}
 
 		def start() = {
+			consoleCommands += "quit"
+			Mockito.when(console.readline()).thenReturn(consoleCommands.head, consoleCommands.tail:_*)
 			socialNetworking start
 		}
 
 		def displays(messages: String*) = {
-			expectedMessages = expectedMessages ++ messages
+			expectedMessages ++= messages
 			expectedMessages foreach(m => verify(console).write(m))
 		}
 	}

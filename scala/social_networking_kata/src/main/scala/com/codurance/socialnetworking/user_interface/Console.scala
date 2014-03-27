@@ -6,7 +6,7 @@ class Console {
 	}
 
 	def readline(): String = {
-		null
+		""
 	}
 
 }
