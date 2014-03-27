@@ -1,4 +1,4 @@
-package com.codurance.socialnetworking
+package unit.com.codurance.socialnetworking
 
 class HelloSpecs extends UnitSpec {
 

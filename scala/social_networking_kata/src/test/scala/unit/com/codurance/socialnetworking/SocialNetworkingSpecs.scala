@@ -1,7 +1,8 @@
-package com.codurance.socialnetworking
+package unit.com.codurance.socialnetworking
 
 import com.codurance.socialnetworking.user_interface.Console
 import org.mockito.Mockito._
+import com.codurance.socialnetworking.SocialNetworking
 
 class SocialNetworkingSpecs extends UnitSpec {
 
