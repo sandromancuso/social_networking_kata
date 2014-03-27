@@ -20,12 +20,9 @@ class PostingScenario extends AcceptanceSpec {
 			val application = fixture
 
 			Given("Alice posts messages")
-				val firstMessageFromAlice = "Alice -> Hello, my name is Alice"
-				val secondMessageFromAlice = "Alice -> It's a lovely day today"
 				application receives(firstMessageFromAlice, secondMessageFromAlice)
 
 			When("Bob reads Alice's messages")
-				val bobReadsMessageFromAlice = "Alice"
 				application receives bobReadsMessageFromAlice
 				application start
 
@@ -33,6 +30,10 @@ class PostingScenario extends AcceptanceSpec {
 				application displays(secondMessageFromAlice, firstMessageFromAlice)
 		}
 	}
+
+	val firstMessageFromAlice = "Alice -> Hello, my name is Alice"
+	val secondMessageFromAlice = "Alice -> It's a lovely day today"
+	val bobReadsMessageFromAlice = "Alice"
 
 	def fixture = new {
 
