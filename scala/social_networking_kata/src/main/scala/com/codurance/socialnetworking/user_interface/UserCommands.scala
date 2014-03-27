@@ -1,9 +1,14 @@
 package com.codurance.socialnetworking.user_interface
 
-class UserCommands {
+import com.codurance.socialnetworking.command.{Command, CommandFactory}
 
-	def execute(inputCommand: String): Option[List[String]] = {
-		None
+class UserCommands(commandFactory: CommandFactory) {
+
+	def execute(userCommand: String): Option[List[String]] = {
+		commandFactory commandFor userCommand match {
+			case Some(c:Command) => c execute userCommand
+			case _ => None
+		}
 	}
 
 }

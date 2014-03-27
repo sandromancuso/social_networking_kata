@@ -6,6 +6,7 @@ import org.mockito.Mockito._
 import com.codurance.socialnetworking.SocialNetworking
 import com.codurance.socialnetworking.user_interface.{UserCommands, Console}
 import scala.collection.mutable
+import com.codurance.socialnetworking.command.CommandFactory
 
 class PostingScenario extends AcceptanceSpec {
 
@@ -39,7 +40,8 @@ class PostingScenario extends AcceptanceSpec {
 
 		val QUIT = "quit"
 		val console = mock[Console]
-		val socialNetworking = new SocialNetworking(console, new UserCommands)
+		val userCommands = new UserCommands(new CommandFactory)
+		val socialNetworking = new SocialNetworking(console, userCommands)
 		var consoleCommands: mutable.MutableList[String] = mutable.MutableList()
 		var expectedMessages: mutable.MutableList[String] = mutable.MutableList()
 

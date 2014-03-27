@@ -9,5 +9,4 @@ abstract class UnitSpec extends FlatSpec
 						with OptionValues
 						with Inside
 						with Inspectors
-//						with MockFactory
 						with MockitoSugar
