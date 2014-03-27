@@ -1,7 +1,7 @@
 package com.codurance.socialnetworking.command
 
-trait Command {
+abstract class Command(userCommand: String) {
 
-	def execute(userCommand: String): Option[List[String]]
+	def execute: Option[List[String]]
 
 }

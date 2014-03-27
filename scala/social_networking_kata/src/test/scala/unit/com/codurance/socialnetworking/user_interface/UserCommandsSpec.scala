@@ -24,7 +24,7 @@ class UserCommandsSpec extends UnitSpec {
 
 		userCommands execute USER_POST_COMMAND
 
-		verify(postCommand).execute(USER_POST_COMMAND)
+		verify(postCommand) execute
 	}
 
 	trait context {
