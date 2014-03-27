@@ -11,16 +11,8 @@ class UserCommandsSpec extends UnitSpec {
 
 	val USER_POST_COMMAND = "Alice -> Hello"
 
-	"UserCommands" should "return None when there is no matching command" in new context {
-		given(commandFactory commandFor USER_POST_COMMAND) willReturn None
-
-		userCommands execute USER_POST_COMMAND should be(None)
-
-		verify(commandFactory) commandFor USER_POST_COMMAND
-	}
-
-	it should "execute a command when there is a matching one" in new context {
-		given(commandFactory commandFor USER_POST_COMMAND) willReturn Some(postCommand)
+	"UserCommands" should "execute the respective application command" in new context {
+		given(commandFactory commandFor USER_POST_COMMAND) willReturn postCommand
 
 		userCommands execute USER_POST_COMMAND
 

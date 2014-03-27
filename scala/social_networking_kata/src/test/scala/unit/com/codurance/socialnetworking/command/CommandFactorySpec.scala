@@ -1,19 +1,25 @@
 package unit.com.codurance.socialnetworking.command
 
 import unit.com.codurance.socialnetworking.UnitSpec
-import com.codurance.socialnetworking.command.{PostCommand, CommandFactory}
+import com.codurance.socialnetworking.command.{ReadCommand, PostCommand, CommandFactory}
 import com.codurance.socialnetworking.domain.Users
 
 class CommandFactorySpec extends UnitSpec {
 
-	"CommandFactory" should "return None when there is not a matching command" in new context {
-		commandFactory commandFor INVALID_COMMAND should be (None)
+	"CommandFactory" should "return a ReadCommand by default" in new context {
+		commandFactory commandFor RANDOM_STRING shouldBe a [ReadCommand]
+	}
+
+	it should "return a ReadCommand when it receives a user name" in new context {
+		val command = commandFactory commandFor USER_READ_COMMAND
+
+		command shouldBe a [ReadCommand]
 	}
 
 	it should "return a PostCommand" in new context {
 		val command = commandFactory commandFor USER_POST_COMMAND
 
-		command.get shouldBe a [PostCommand]
+		command shouldBe a [PostCommand]
 	}
 
 	trait context {
@@ -21,7 +27,8 @@ class CommandFactorySpec extends UnitSpec {
 		val commandFactory = new CommandFactory(users)
 	}
 
-	val INVALID_COMMAND = "invalid_command"
+	val RANDOM_STRING = "random string"
 	val USER_POST_COMMAND = "Alice -> Hello"
+	val USER_READ_COMMAND = "Alice"
 
 }
