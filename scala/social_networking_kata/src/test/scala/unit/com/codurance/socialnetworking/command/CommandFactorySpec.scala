@@ -1,7 +1,7 @@
 package unit.com.codurance.socialnetworking.command
 
 import unit.com.codurance.socialnetworking.UnitSpec
-import com.codurance.socialnetworking.command.{FollowCommand, ReadCommand, PostCommand, CommandFactory}
+import com.codurance.socialnetworking.command._
 import com.codurance.socialnetworking.domain.Users
 
 class CommandFactorySpec extends UnitSpec {
@@ -28,6 +28,12 @@ class CommandFactorySpec extends UnitSpec {
 		command shouldBe a [FollowCommand]
 	}
 
+	it should "return a WallCommand" in new context {
+		val command = commandFactory commandFor USER_WALL_COMMAND
+
+		command shouldBe a [WallCommand]
+	}
+
 	trait context {
 		val users = mock[Users]
 		val commandFactory = new CommandFactory(users)
@@ -37,5 +43,6 @@ class CommandFactorySpec extends UnitSpec {
 	val USER_POST_COMMAND = "Alice -> Hello"
 	val USER_READ_COMMAND = "Alice"
 	val USER_FOLLOW_COMMAND = "Bob follows Alice"
+	val USER_WALL_COMMAND = "Bob wall"
 
 }

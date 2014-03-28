@@ -4,14 +4,16 @@ import com.codurance.socialnetworking.domain.Users
 
 class CommandFactory(users: Users) {
 
-	val POST_COMMAND_PATTERN = ".*\\s->\\s.*".r
-	val READ_COMMAND_PATTERN = ".*".r
+	val POST_COMMAND_PATTERN   = ".*\\s->\\s.*".r
+	val READ_COMMAND_PATTERN   = ".*".r
 	val FOLLOW_COMMAND_PATTERN = ".*\\sfollows\\s.*".r
+	val WALL_COMMAND_PATTERN   = ".*\\swall".r
 
 	def commandFor(userCommand: String): Command = {
 		userCommand match {
 			case POST_COMMAND_PATTERN()   => new PostCommand(userCommand, users)
 			case FOLLOW_COMMAND_PATTERN() => new FollowCommand(userCommand, users)
+			case WALL_COMMAND_PATTERN()   => new WallCommand(userCommand, users)
 			case READ_COMMAND_PATTERN()   => new ReadCommand(userCommand, users)
 		}
 	}
