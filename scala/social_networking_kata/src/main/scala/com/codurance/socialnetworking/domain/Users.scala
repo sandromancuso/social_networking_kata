@@ -20,4 +20,8 @@ class Users {
 		}
 	}
 
+	def follow(user: String, follows: String) = {
+
+	}
+
 }
