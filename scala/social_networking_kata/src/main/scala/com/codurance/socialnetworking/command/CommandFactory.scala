@@ -10,7 +10,7 @@ class CommandFactory(users: Users) {
 	def commandFor(userCommand: String): Command = {
 		userCommand match {
 			case POST_COMMAND_PATTERN() => new PostCommand(userCommand, users)
-			case READ_COMMAND_PATTERN() => new ReadCommand(userCommand)
+			case READ_COMMAND_PATTERN() => new ReadCommand(userCommand, users)
 		}
 	}
 
