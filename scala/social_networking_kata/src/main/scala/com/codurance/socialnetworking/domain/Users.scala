@@ -24,4 +24,8 @@ class Users {
 
 	}
 
+	def wall(user_name: String): Option[List[String]] = {
+		None
+	}
+
 }
