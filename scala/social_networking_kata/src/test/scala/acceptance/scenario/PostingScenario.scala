@@ -22,19 +22,22 @@ class PostingScenario extends AcceptanceSpec {
 			val application = fixture
 
 			Given("Alice posts messages")
-				application receives(firstMessageFromAlice, secondMessageFromAlice)
+				application receives(FIRST_POST_COMMAND_FROM_ALICE,
+									 SECOND_POST_COMMAND_FROM_ALICE)
 
 			When("Bob reads Alice's messages")
 				application receives bobReadsMessageFromAlice
 				application start
 
 			Then("Alice's messages are displayed in reverse-chronological order")
-				application displays(secondMessageFromAlice, firstMessageFromAlice)
+				application displays(SECOND_MESSAGE_FROM_ALICE, FIRST_MESSAGE_FROM_ALICE)
 		}
 	}
 
-	val firstMessageFromAlice = "Alice -> Hello, my name is Alice"
-	val secondMessageFromAlice = "Alice -> It's a lovely day today"
+	val FIRST_MESSAGE_FROM_ALICE = "Hello, my name is Alice"
+	val SECOND_MESSAGE_FROM_ALICE = "It's a lovely day today"
+	val FIRST_POST_COMMAND_FROM_ALICE = "Alice -> " + FIRST_MESSAGE_FROM_ALICE
+	val SECOND_POST_COMMAND_FROM_ALICE = "Alice -> " + SECOND_MESSAGE_FROM_ALICE
 	val bobReadsMessageFromAlice = "Alice"
 
 	def fixture = new {
