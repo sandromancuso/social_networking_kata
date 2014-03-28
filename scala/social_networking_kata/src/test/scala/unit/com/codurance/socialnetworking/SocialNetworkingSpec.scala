@@ -21,7 +21,6 @@ class SocialNetworkingSpec extends UnitSpec {
 	}
 
 	"SocialNetworking" should "read from the console" in new context {
-
 		given(console readline) willReturn (USER_FIRST_POST, QUIT)
 
 		socialNetworking.start
