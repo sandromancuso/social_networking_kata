@@ -2,7 +2,7 @@ package com.codurance.socialnetworking.infrastructure
 
 import java.util.{Date, Calendar}
 
-class Clock {
+object Clock {
 
 	def now(): Date = {
 		Calendar getInstance() getTime

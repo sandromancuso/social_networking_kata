@@ -42,7 +42,6 @@ class UsersSpec extends UnitSpec {
 	}
 
 	trait context {
-		val clock = mock[Clock]
 		val users = new Users
 	}
 
