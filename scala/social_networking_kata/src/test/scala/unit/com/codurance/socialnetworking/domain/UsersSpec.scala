@@ -2,6 +2,7 @@ package unit.com.codurance.socialnetworking.domain
 
 import unit.com.codurance.socialnetworking.UnitSpec
 import com.codurance.socialnetworking.domain.{Post, Users}
+import com.codurance.socialnetworking.infrastructure.Clock
 
 class UsersSpec extends UnitSpec {
 
@@ -41,6 +42,7 @@ class UsersSpec extends UnitSpec {
 	}
 
 	trait context {
+		val clock = mock[Clock]
 		val users = new Users
 	}
 
