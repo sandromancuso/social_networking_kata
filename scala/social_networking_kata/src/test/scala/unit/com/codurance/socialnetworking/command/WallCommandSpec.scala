@@ -2,9 +2,9 @@ package unit.com.codurance.socialnetworking.command
 
 import org.mockito.Mockito._
 import org.mockito.BDDMockito._
-import com.codurance.socialnetworking.command.{ReadCommand, WallCommand}
+import com.codurance.socialnetworking.command.WallCommand
 import unit.com.codurance.socialnetworking.UnitSpec
-import com.codurance.socialnetworking.domain.Users
+import com.codurance.socialnetworking.domain.{Post, User, Users}
 
 class WallCommandSpec extends UnitSpec {
 
@@ -17,9 +17,9 @@ class WallCommandSpec extends UnitSpec {
 	}
 
 	it should "return a list of posts when user exists" in new context {
-		given(users wall USER) willReturn Some(List(A_POST))
+		given(users wall USER) willReturn Some(List(CHARLIE_POST))
 
-		new WallCommand(USER, users) execute() should be(Some(List(A_POST)))
+		new WallCommand(USER, users) execute() should be(Some(List(CHARLIE_POST)))
 	}
 
 	trait context {
@@ -28,5 +28,7 @@ class WallCommandSpec extends UnitSpec {
 
 	val INVALID_USER = "invalid user"
  	val USER = "Charlie"
+	val CHARLIE = new User("Charlie")
 	val A_POST = "Hello"
+	val CHARLIE_POST = Post(A_POST)
 }

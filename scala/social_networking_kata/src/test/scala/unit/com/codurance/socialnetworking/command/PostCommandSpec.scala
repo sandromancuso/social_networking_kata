@@ -15,7 +15,7 @@ class PostCommandSpec extends UnitSpec {
 	it should "store user's post" in new context {
 		new PostCommand(USER + POST + MESSAGE, users) execute
 
-		verify(users) add(USER, MESSAGE)
+		verify(users) newPost(USER, MESSAGE)
 	}
 
 	trait context {

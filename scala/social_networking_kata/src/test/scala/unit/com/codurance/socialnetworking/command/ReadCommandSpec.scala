@@ -5,7 +5,7 @@ import org.mockito.BDDMockito._
 
 import unit.com.codurance.socialnetworking.UnitSpec
 import com.codurance.socialnetworking.command.ReadCommand
-import com.codurance.socialnetworking.domain.Users
+import com.codurance.socialnetworking.domain.{Post, User, Users}
 
 class ReadCommandSpec extends UnitSpec {
 
@@ -18,9 +18,9 @@ class ReadCommandSpec extends UnitSpec {
 	}
 
 	it should "return a list of user posts when user exists" in new context {
-		given(users.postsBy(USER)) willReturn Some(List(A_POST))
+		given(users.postsBy(USER)) willReturn Some(List(ALICE_POST))
 
-		new ReadCommand(USER, users) execute() should be(Some(List(A_POST)))
+		new ReadCommand(USER, users) execute() should be(Some(List(ALICE_POST)))
 	}
 
 	trait context {
@@ -29,5 +29,7 @@ class ReadCommandSpec extends UnitSpec {
 
 	val INVALID_USER = "invalid user"
 	val USER = "Alice"
+	val ALICE = new User("Alice")
 	val A_POST = "Hello"
+	val ALICE_POST = Post(A_POST)
 }

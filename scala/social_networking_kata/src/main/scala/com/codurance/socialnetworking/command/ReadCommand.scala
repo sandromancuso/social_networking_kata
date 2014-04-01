@@ -1,10 +1,10 @@
 package com.codurance.socialnetworking.command
 
-import com.codurance.socialnetworking.domain.Users
+import com.codurance.socialnetworking.domain.{Post, Users}
 
 class ReadCommand(user: String, users: Users) extends Command(user) {
 
-	override def execute(): Option[List[String]] = {
+	override def execute(): Option[List[Post]] = {
 		users postsBy user
 	}
 

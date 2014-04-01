@@ -9,7 +9,8 @@ class SocialNetworking(console: Console, val userCommands: UserCommands) {
 	def start() = {
 		var userCommand: String = ""
 		while ( {userCommand = console.readline(); userCommand != QUIT} ) {
-			userCommands.execute(userCommand).getOrElse(List()).foreach(console write)
+			val posts = userCommands.execute(userCommand).getOrElse(List())
+			posts.foreach(p => console write p.message)
 		}
 	}
 
