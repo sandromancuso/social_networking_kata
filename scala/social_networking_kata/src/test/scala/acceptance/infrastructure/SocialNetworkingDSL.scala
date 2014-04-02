@@ -25,8 +25,8 @@ trait SocialNetworkingDSL extends MockitoSugar {
 		val console = mock[Console]
 		val clock = mock[Clock]
 		val userCommands = new UserCommands(new CommandFactory(new Users(clock)))
-		val view = new View
-		val socialNetworking = new SocialNetworking(view, console, userCommands)
+		val view = new View(console)
+		val socialNetworking = new SocialNetworking(view, userCommands)
 		var consoleCommands: mutable.MutableList[String] = mutable.MutableList()
 		var clockTimes: mutable.MutableList[Date] = mutable.MutableList()
 		var expectedMessages: mutable.MutableList[String] = mutable.MutableList()
