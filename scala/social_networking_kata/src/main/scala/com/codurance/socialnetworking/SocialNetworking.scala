@@ -1,6 +1,6 @@
 package com.codurance.socialnetworking
 
-import com.codurance.socialnetworking.user_interface.{View, UserCommands, Console}
+import com.codurance.socialnetworking.user_interface.{View, UserCommands}
 
 class SocialNetworking(view: View,
                        userCommands: UserCommands) {

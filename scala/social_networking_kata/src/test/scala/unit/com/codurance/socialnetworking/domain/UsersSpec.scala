@@ -3,7 +3,7 @@ package unit.com.codurance.socialnetworking.domain
 import org.mockito.BDDMockito._
 
 import unit.com.codurance.socialnetworking.UnitSpec
-import com.codurance.socialnetworking.domain.{Post, Users}
+import com.codurance.socialnetworking.domain.Users
 import java.util.{Calendar, Date}
 import com.codurance.socialnetworking.infrastructure.Clock
 

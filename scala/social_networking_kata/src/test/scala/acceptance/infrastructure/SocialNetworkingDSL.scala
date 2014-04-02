@@ -5,8 +5,6 @@ import com.codurance.socialnetworking.command.CommandFactory
 import com.codurance.socialnetworking.domain.Users
 import com.codurance.socialnetworking.SocialNetworking
 import scala.collection.mutable
-import org.mockito.BDDMockito._
-import org.mockito.Mockito
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import com.codurance.socialnetworking.infrastructure.Clock
@@ -42,7 +40,6 @@ trait SocialNetworkingDSL extends MockitoSugar {
 
 		def start() = {
 			consoleCommands += "quit"
-			println(consoleCommands)
 			when(console.readline()).thenReturn(consoleCommands.head, consoleCommands.tail:_*)
 			if (clockTimes.isEmpty) clockTimes += new Date()
 			when(clock.current_time()) thenReturn(clockTimes.head, clockTimes.tail:_*)

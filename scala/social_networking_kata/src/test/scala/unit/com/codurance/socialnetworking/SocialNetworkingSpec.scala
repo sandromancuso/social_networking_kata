@@ -1,6 +1,6 @@
 package unit.com.codurance.socialnetworking
 
-import com.codurance.socialnetworking.user_interface.{View, UserCommands, Console}
+import com.codurance.socialnetworking.user_interface.{View, UserCommands}
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.mockito.BDDMockito._
