@@ -1,6 +1,6 @@
 package acceptance.infrastructure
 
-import com.codurance.socialnetworking.user_interface.{UserCommands, Console}
+import com.codurance.socialnetworking.user_interface.{View, UserCommands, Console}
 import com.codurance.socialnetworking.command.CommandFactory
 import com.codurance.socialnetworking.domain.Users
 import com.codurance.socialnetworking.SocialNetworking
@@ -25,7 +25,8 @@ trait SocialNetworkingDSL extends MockitoSugar {
 		val console = mock[Console]
 		val clock = mock[Clock]
 		val userCommands = new UserCommands(new CommandFactory(new Users(clock)))
-		val socialNetworking = new SocialNetworking(console, userCommands)
+		val view = new View
+		val socialNetworking = new SocialNetworking(view, console, userCommands)
 		var consoleCommands: mutable.MutableList[String] = mutable.MutableList()
 		var clockTimes: mutable.MutableList[Date] = mutable.MutableList()
 		var expectedMessages: mutable.MutableList[String] = mutable.MutableList()

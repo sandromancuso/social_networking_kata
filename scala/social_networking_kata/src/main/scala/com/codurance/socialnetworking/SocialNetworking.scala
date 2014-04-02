@@ -1,8 +1,9 @@
 package com.codurance.socialnetworking
 
-import com.codurance.socialnetworking.user_interface.{UserCommands, Console}
+import com.codurance.socialnetworking.user_interface.{View, UserCommands, Console}
 
-class SocialNetworking(console: Console,
+class SocialNetworking(view: View,
+                       console: Console,
                        userCommands: UserCommands) {
 
 	val QUIT = "quit"
@@ -11,7 +12,7 @@ class SocialNetworking(console: Console,
 		var userCommand: String = ""
 		while ( {userCommand = console.readline(); userCommand != QUIT} ) {
 			val posts = userCommands.execute(userCommand).getOrElse(List())
-			console display posts
+			view display posts
 //			posts.foreach(p => console write p.user_name + " -> " + p.message)
 		}
 	}

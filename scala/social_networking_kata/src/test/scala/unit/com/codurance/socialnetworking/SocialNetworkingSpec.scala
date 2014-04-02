@@ -1,6 +1,6 @@
 package unit.com.codurance.socialnetworking
 
-import com.codurance.socialnetworking.user_interface.{UserCommands, Console}
+import com.codurance.socialnetworking.user_interface.{View, UserCommands, Console}
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.mockito.BDDMockito._
@@ -33,7 +33,7 @@ class SocialNetworkingSpec extends UnitSpec {
 
 		socialNetworking.start
 
-		verify(console) display(posts)
+		verify(view) display(posts)
 	}
 
 	it should("accept multiple user commands") in new context {
@@ -47,7 +47,7 @@ class SocialNetworkingSpec extends UnitSpec {
 
 		socialNetworking.start
 
-		verify(console) display(posts)
+		verify(view) display(posts)
 	}
 
 	val ALICE = new User("Alice")
@@ -62,8 +62,9 @@ class SocialNetworkingSpec extends UnitSpec {
 	trait context {
 		val console = mock[Console]
 		val userCommands = mock[UserCommands]
+		val view = mock[View]
 		given(userCommands execute(anyString())) willReturn None
-		val socialNetworking = new SocialNetworking(console, userCommands)
+		val socialNetworking = new SocialNetworking(view, console, userCommands)
 	}
 
 }
