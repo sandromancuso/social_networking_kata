@@ -14,32 +14,23 @@ class FollowScenario extends AcceptanceSpec {
 		scenario("User follows friends") {
 
 			Given("Charlie follows Alice")
-				application receives(NOW,               FIRST_POST_COMMAND_FROM_ALICE)
-				application receives(NOW + ONE_SECOND,  FIRST_POST_COMMAND_FROM_CHARLIE)
-				application receives(NOW + TWO_SECONDS, SECOND_POST_COMMAND_FROM_ALICE)
+				application receives(NOW, "Alice -> Hello, my name is Alice")
+				application receives(NOW + ONE_SECOND, "Charlie -> I'm in London today. Anyone up for a drink?")
+				application receives(NOW + TWO_SECONDS, "Alice -> It's a lovely day today")
 
-				application receives CHARLIE_FOLLOWS_ALICE_COMMAND
+				application receives "Charlie follows Alice"
 
 			When("Charlie checks his wall")
- 	            application receives (NOW, CHARLIE_WALL_COMMAND)
+ 	            application receives (NOW, "Charlie wall")
 
 			Then("Charlie sees Alice's messages and his messages in reverse-chronological order")
 				application start()
- 	            application displays(SECOND_POST_COMMAND_FROM_ALICE,
-		                             FIRST_POST_COMMAND_FROM_CHARLIE,
-				                     FIRST_POST_COMMAND_FROM_ALICE)
+ 	            application displays(
+		                "Alice - It's a lovely day today",
+		                "Charlie - I'm in London today. Anyone up for a drink?",
+		                "Alice - Hello, my name is Alice")
 		}
 
 	}
 
-	val FIRST_MESSAGE_FROM_ALICE = "Hello, my name is Alice"
-	val SECOND_MESSAGE_FROM_ALICE = "It's a lovely day today"
-	val FIRST_POST_COMMAND_FROM_ALICE = "Alice -> " + FIRST_MESSAGE_FROM_ALICE
-	val SECOND_POST_COMMAND_FROM_ALICE = "Alice -> " + SECOND_MESSAGE_FROM_ALICE
-	val FIRST_MESSAGE_FROM_CHARLIE = "I'm in London today. Anyone up for a drink?"
-	val FIRST_POST_COMMAND_FROM_CHARLIE = "Charlie -> " + FIRST_MESSAGE_FROM_CHARLIE
-
-	val CHARLIE_FOLLOWS_ALICE_COMMAND = "Charlie follows Alice"
-	val CHARLIE_WALL_COMMAND = "Charlie wall"
-
-}
+	}

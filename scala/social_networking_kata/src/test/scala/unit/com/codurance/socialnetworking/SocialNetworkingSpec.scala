@@ -60,7 +60,6 @@ class SocialNetworkingSpec extends UnitSpec {
 	val QUIT: String = "quit"
 
 	trait context {
-//		val console = mock[Console]
 		val userCommands = mock[UserCommands]
 		val view = mock[View]
 		given(userCommands execute(anyString())) willReturn None
