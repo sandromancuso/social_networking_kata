@@ -1,5 +1,7 @@
 package com.codurance.socialnetworking.domain
 
-case class Post(message: String) {
+import java.util.Date
+
+case class Post(message: String, date: Date) {
 
 }

@@ -6,6 +6,7 @@ import org.mockito.Matchers._
 import org.mockito.BDDMockito._
 import com.codurance.socialnetworking.SocialNetworking
 import com.codurance.socialnetworking.domain.{User, Post}
+import com.codurance.socialnetworking.infrastructure.Clock
 
 class SocialNetworkingSpec extends UnitSpec {
 
@@ -40,7 +41,7 @@ class SocialNetworkingSpec extends UnitSpec {
 
 	it should ("display the outcome of the user's command") in new context {
 		given(console readline) willReturn (READ_COMMAND, QUIT)
-		given(userCommands execute(READ_COMMAND)) willReturn Some(List(Post(USER_FIRST_POST)))
+		given(userCommands execute(READ_COMMAND)) willReturn Some(List(Post(USER_FIRST_POST, Clock now)))
 
 		socialNetworking.start
 
@@ -51,8 +52,8 @@ class SocialNetworkingSpec extends UnitSpec {
 		given(console readline) willReturn (USER_FIRST_POST, USER_SECOND_POST, READ_COMMAND, QUIT)
 		given(userCommands execute(USER_FIRST_POST)) willReturn None
 		given(userCommands execute(USER_SECOND_POST)) willReturn None
-		given(userCommands execute(READ_COMMAND)) willReturn Some(List(Post(USER_SECOND_POST),
-																	   Post(USER_FIRST_POST)))
+		given(userCommands execute(READ_COMMAND)) willReturn Some(List(Post(USER_SECOND_POST, Clock now),
+																	   Post(USER_FIRST_POST, Clock now)))
 
 		socialNetworking.start
 

@@ -8,6 +8,7 @@ import scala.collection.mutable
 import org.mockito.Mockito
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
+import com.codurance.socialnetworking.infrastructure.Clock
 
 trait SocialNetworkingDSL extends MockitoSugar {
 
@@ -16,7 +17,7 @@ trait SocialNetworkingDSL extends MockitoSugar {
 
 		val QUIT = "quit"
 		val console = mock[Console]
-		val userCommands = new UserCommands(new CommandFactory(new Users))
+		val userCommands = new UserCommands(new CommandFactory(new Users(new Clock)))
 		val socialNetworking = new SocialNetworking(console, userCommands)
 		var consoleCommands: mutable.MutableList[String] = mutable.MutableList()
 		var expectedMessages: mutable.MutableList[String] = mutable.MutableList()

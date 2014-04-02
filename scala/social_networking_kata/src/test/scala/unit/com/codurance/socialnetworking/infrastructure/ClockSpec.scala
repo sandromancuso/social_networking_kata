@@ -7,7 +7,7 @@ import java.util.Date
 class ClockSpec extends UnitSpec {
 
 	"Clock" should "return the current time" in {
-		Clock.now() shouldBe a [Date]
+		new Clock current_time() shouldBe a [Date]
 	}
 	
 }

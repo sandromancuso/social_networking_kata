@@ -5,6 +5,7 @@ import org.mockito.BDDMockito._
 import com.codurance.socialnetworking.command.WallCommand
 import unit.com.codurance.socialnetworking.UnitSpec
 import com.codurance.socialnetworking.domain.{Post, User, Users}
+import com.codurance.socialnetworking.infrastructure.Clock
 
 class WallCommandSpec extends UnitSpec {
 
@@ -30,5 +31,5 @@ class WallCommandSpec extends UnitSpec {
  	val USER = "Charlie"
 	val CHARLIE = new User("Charlie")
 	val A_POST = "Hello"
-	val CHARLIE_POST = Post(A_POST)
+	val CHARLIE_POST = Post(A_POST, Clock now)
 }

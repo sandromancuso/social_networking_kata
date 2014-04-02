@@ -1,8 +1,9 @@
 package com.codurance.socialnetworking.domain
 
 import scala.collection.mutable
+import com.codurance.socialnetworking.infrastructure.Clock
 
-class Users {
+class Users(clock: Clock) {
 
 	val users: mutable.HashMap[String, User] = mutable.HashMap()
 
@@ -15,7 +16,7 @@ class Users {
 
 	def newPost(user_name: String, post_message: String) = {
 		val user = userBy(user_name)
-		val post = Post(post_message)
+		val post = Post(post_message, clock.current_time())
 
 		user add post
 	}
@@ -43,7 +44,7 @@ class Users {
 	
 	private def wallFor(user: User): List[Post] = {
 		val posts_from_friends = user.followedUsers().map(u => u.allPosts()).get(0).get
-		user.allPosts() ++ posts_from_friends
+		(user.allPosts() ++ posts_from_friends).sortWith((p1, p2) => p1.date.getTime > p2.date.getTime)
 	}
 
 }
