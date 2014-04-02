@@ -10,9 +10,52 @@ import com.codurance.socialnetworking.infrastructure.Clock
 
 class SocialNetworkingSpec extends UnitSpec {
 
+	"SocialNetworking" should "read from the console" in new context {
+		given(console readline) willReturn (ALICE_FIRST_POST_COMMAND, QUIT)
+
+		socialNetworking.start
+
+		verify(console, times(2)).readline()
+	}
+
+	it should ("execute the user's command") in new context {
+		given(console readline) willReturn (ALICE_FIRST_POST_COMMAND, QUIT)
+
+		socialNetworking.start
+
+		verify(userCommands) execute ALICE_FIRST_POST_COMMAND
+	}
+
+	it should ("display the outcome of the user's command") in new context {
+		given(console readline) willReturn (READ_COMMAND, QUIT)
+		val posts = List(Post(ALICE user_name, ALICE_FIRST_MESSAGE, Clock now))
+		given(userCommands execute(READ_COMMAND)) willReturn Some(posts)
+
+		socialNetworking.start
+
+		verify(console) display(posts)
+	}
+
+	it should("accept multiple user commands") in new context {
+		given(console readline) willReturn (ALICE_FIRST_POST_COMMAND, ALICE_SECOND_POST_COMMAND, READ_COMMAND, QUIT)
+		given(userCommands execute(ALICE_FIRST_POST_COMMAND)) willReturn None
+		given(userCommands execute(ALICE_SECOND_POST_COMMAND)) willReturn None
+
+		val posts = List(Post(ALICE user_name, ALICE_SECOND_MESSAGE, Clock now),
+						 Post(ALICE user_name, ALICE_FIRST_MESSAGE, Clock now))
+		given(userCommands execute(READ_COMMAND)) willReturn Some(posts)
+
+		socialNetworking.start
+
+		verify(console) display(posts)
+	}
+
 	val ALICE = new User("Alice")
-	val USER_FIRST_POST = "Alice -> Hello"
-	val USER_SECOND_POST = "Alice -> Hello again"
+	val ALICE_FIRST_MESSAGE = "Hello"
+	val ALICE_FIRST_POST_COMMAND = ALICE.user_name + " -> " + ALICE_FIRST_MESSAGE
+	val ALICE_SECOND_MESSAGE = "Hello again"
+	val ALICE_SECOND_POST_COMMAND = ALICE.user_name + " -> " + ALICE_SECOND_MESSAGE
+
 	val READ_COMMAND = "Alice"
 	val QUIT: String = "quit"
 
@@ -21,44 +64,6 @@ class SocialNetworkingSpec extends UnitSpec {
 		val userCommands = mock[UserCommands]
 		given(userCommands execute(anyString())) willReturn None
 		val socialNetworking = new SocialNetworking(console, userCommands)
-	}
-
-	"SocialNetworking" should "read from the console" in new context {
-		given(console readline) willReturn (USER_FIRST_POST, QUIT)
-
-		socialNetworking.start
-
-		verify(console, times(2)).readline()
-	}
-
-	it should ("execute the user's command") in new context {
-		given(console readline) willReturn (USER_FIRST_POST, QUIT)
-
-		socialNetworking.start
-
-		verify(userCommands) execute USER_FIRST_POST
-	}
-
-	it should ("display the outcome of the user's command") in new context {
-		given(console readline) willReturn (READ_COMMAND, QUIT)
-		given(userCommands execute(READ_COMMAND)) willReturn Some(List(Post(USER_FIRST_POST, Clock now)))
-
-		socialNetworking.start
-
-		verify(console).write(USER_FIRST_POST)
-	}
-
-	it should("accept multiple user commands") in new context {
-		given(console readline) willReturn (USER_FIRST_POST, USER_SECOND_POST, READ_COMMAND, QUIT)
-		given(userCommands execute(USER_FIRST_POST)) willReturn None
-		given(userCommands execute(USER_SECOND_POST)) willReturn None
-		given(userCommands execute(READ_COMMAND)) willReturn Some(List(Post(USER_SECOND_POST, Clock now),
-																	   Post(USER_FIRST_POST, Clock now)))
-
-		socialNetworking.start
-
-		verify(console).write(USER_SECOND_POST)
-		verify(console).write(USER_FIRST_POST)
 	}
 
 }

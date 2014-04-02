@@ -32,5 +32,5 @@ class ReadCommandSpec extends UnitSpec {
 	val USER = "Alice"
 	val ALICE = new User("Alice")
 	val A_POST = "Hello"
-	val ALICE_POST = Post(A_POST, Clock now)
+	val ALICE_POST = Post(ALICE user_name, A_POST, Clock now)
 }

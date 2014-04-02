@@ -31,5 +31,5 @@ class WallCommandSpec extends UnitSpec {
  	val USER = "Charlie"
 	val CHARLIE = new User("Charlie")
 	val A_POST = "Hello"
-	val CHARLIE_POST = Post(A_POST, Clock now)
+	val CHARLIE_POST = Post(CHARLIE user_name, A_POST, Clock now)
 }
