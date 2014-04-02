@@ -9,7 +9,7 @@ import com.codurance.socialnetworking.infrastructure.Clock
 
 class UsersSpec extends UnitSpec {
 
-	"UsersSpec" should "return no posts when the user does not exist" in new context {
+	"Users" should "return no posts when the user does not exist" in new context {
 		users postsBy(NON_EXISTENT_USER) should be(None)
 	}
 

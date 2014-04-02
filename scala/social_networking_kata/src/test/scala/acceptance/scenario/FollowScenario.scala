@@ -14,13 +14,14 @@ class FollowScenario extends AcceptanceSpec {
 		scenario("User follows friends") {
 
 			Given("Charlie follows Alice")
-				application receives(FIRST_POST_COMMAND_FROM_ALICE,
-									 FIRST_POST_COMMAND_FROM_CHARLIE,
-									 SECOND_POST_COMMAND_FROM_ALICE)
+				application receives(NOW,               FIRST_POST_COMMAND_FROM_ALICE)
+				application receives(NOW + ONE_SECOND,  FIRST_POST_COMMAND_FROM_CHARLIE)
+				application receives(NOW + TWO_SECONDS, SECOND_POST_COMMAND_FROM_ALICE)
+
 				application receives CHARLIE_FOLLOWS_ALICE_COMMAND
 
 			When("Charlie checks his wall")
- 	            application receives CHARLIE_WALL_COMMAND
+ 	            application receives (NOW, CHARLIE_WALL_COMMAND)
 
 			Then("Charlie sees Alice's messages and his messages in reverse-chronological order")
 				application start()
