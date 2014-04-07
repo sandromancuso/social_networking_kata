@@ -6,7 +6,6 @@ import org.mockito.Mockito._
 import unit.com.codurance.socialnetworking.UnitSpec
 import com.codurance.socialnetworking.user_interface.{PostFormatter, View, Console}
 import com.codurance.socialnetworking.domain.Post
-import java.util.Date
 import java.time.LocalDateTime
 
 class ViewSpec extends UnitSpec {

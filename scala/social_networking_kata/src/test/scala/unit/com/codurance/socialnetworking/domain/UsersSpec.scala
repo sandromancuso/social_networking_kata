@@ -4,7 +4,7 @@ import org.mockito.BDDMockito._
 
 import unit.com.codurance.socialnetworking.UnitSpec
 import com.codurance.socialnetworking.domain.Users
-import java.util.{Calendar, Date}
+import java.util.Calendar
 import com.codurance.socialnetworking.infrastructure.Clock
 import java.time.LocalDateTime
 
