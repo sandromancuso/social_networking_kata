@@ -14,17 +14,18 @@ import java.time.LocalDateTime
 trait SocialNetworkingDSL extends MockitoSugar {
 
 	val application = fixture
-	val NOW = Calendar getInstance() getTimeInMillis
-	val ONE_SECOND = 1000
-	val TWO_SECONDS = 2000
+	val NOW = LocalDateTime.now()
+	val ONE_SECOND_AGO = NOW.minusSeconds(1)
+	val TWO_SECONDS_AGO = NOW.minusSeconds(2)
 
 	def fixture = new {
 
 		val QUIT = "quit"
 		val console = mock[Console]
-		val clock = mock[Clock]
-		val userCommands = new UserCommands(new CommandFactory(new Users(clock)))
-		val view = new View(console, new PostFormatter(clock))
+		val users_clock = mock[Clock]
+		val formatter_clock = mock[Clock]
+		val userCommands = new UserCommands(new CommandFactory(new Users(users_clock)))
+		val view = new View(console, new PostFormatter(formatter_clock))
 		val socialNetworking = new SocialNetworking(view, userCommands)
 		var consoleCommands: mutable.MutableList[String] = mutable.MutableList()
 		var clockTimes: mutable.MutableList[LocalDateTime] = mutable.MutableList()
@@ -34,16 +35,17 @@ trait SocialNetworkingDSL extends MockitoSugar {
 			consoleCommands ++= userCommands
 		}
 
-		def receives(time_in_millis: Long = NOW, userCommand: String) = {
+		def receives(time: LocalDateTime = NOW, userCommand: String) = {
 			consoleCommands += userCommand
-			clockTimes += LocalDateTime.now()
+			clockTimes += time
 		}
 
 		def start() = {
 			consoleCommands += "quit"
 			when(console.readline()).thenReturn(consoleCommands.head, consoleCommands.tail:_*)
 			if (clockTimes.isEmpty) clockTimes += LocalDateTime.now()
-			when(clock.current_time()) thenReturn(clockTimes.head, clockTimes.tail:_*)
+			when(users_clock.current_time()) thenReturn(clockTimes.head, clockTimes.tail:_*)
+			when(formatter_clock.current_time()) thenReturn(NOW)
 
 			socialNetworking start
 		}

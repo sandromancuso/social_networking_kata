@@ -14,16 +14,16 @@ class PostingScenario extends AcceptanceSpec {
 		scenario("User posts messages") {
 
 			Given("Alice posts messages")
-				application receives("Alice -> Hello, my name is Alice",
-									 "Alice -> It's a lovely day today")
+				application receives(TWO_SECONDS_AGO, "Alice -> Hello, my name is Alice")
+				application receives(NOW, "Alice -> It's a lovely day today")
 
 			When("Bob reads Alice's messages")
 				application receives bobReadsMessageFromAlice
 
 			Then("Alice's messages are displayed in reverse-chronological order")
 				application start()
-				application displays("Alice - It's a lovely day today",
-						             "Alice - Hello, my name is Alice")
+				application displays("Alice - It's a lovely day today (just now)",
+						             "Alice - Hello, my name is Alice (2 seconds ago)")
 		}
 	}
 

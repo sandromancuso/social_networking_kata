@@ -14,9 +14,9 @@ class FollowScenario extends AcceptanceSpec {
 		scenario("User follows friends") {
 
 			Given("Charlie follows Alice")
-				application receives(NOW, "Alice -> Hello, my name is Alice")
-				application receives(NOW + ONE_SECOND, "Charlie -> I'm in London today. Anyone up for a drink?")
-				application receives(NOW + TWO_SECONDS, "Alice -> It's a lovely day today")
+				application receives(TWO_SECONDS_AGO, "Alice -> Hello, my name is Alice")
+				application receives(ONE_SECOND_AGO, "Charlie -> I'm in London today. Anyone up for a drink?")
+				application receives(NOW, "Alice -> It's a lovely day today")
 
 				application receives "Charlie follows Alice"
 
@@ -26,9 +26,9 @@ class FollowScenario extends AcceptanceSpec {
 			Then("Charlie sees Alice's messages and his messages in reverse-chronological order")
 				application start()
  	            application displays(
-		                "Alice - It's a lovely day today",
-		                "Charlie - I'm in London today. Anyone up for a drink?",
-		                "Alice - Hello, my name is Alice")
+		                "Alice - It's a lovely day today (just now)",
+		                "Charlie - I'm in London today. Anyone up for a drink? (1 second ago)",
+		                "Alice - Hello, my name is Alice (2 seconds ago)")
 		}
 
 	}
