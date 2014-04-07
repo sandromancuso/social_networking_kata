@@ -22,16 +22,15 @@ class PostFormatter(clock: Clock) {
 	}
 
 	private def elapsed_time(time_unit: (ChronoUnit, String), post_date: LocalDateTime, now: LocalDateTime) = {
-		var pretty_time = ""
 		val amount = time_unit._1.between(post_date, now)
-		if (amount > 0) {
-			pretty_time = s"$amount ${time_unit._2}"
-			if (amount > 1) {
-				pretty_time += "s"
-			}
-			pretty_time += " ago"
-		}
-		pretty_time
+		if (amount > 0)
+			s"$amount ${time_unit._2}${plural(amount)} ago"
+		else
+			""
+	}
+
+	private def plural(amount: Long): String = {
+		if (amount > 1) "s" else ""
 	}
 
 	val time_units = List(
