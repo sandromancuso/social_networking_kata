@@ -1,11 +1,12 @@
 package com.codurance.socialnetworking.infrastructure
 
 import java.time.LocalDateTime
+import Clock._
 
 class Clock {
 
 	def current_time(): LocalDateTime = {
-		LocalDateTime now()
+		now()
 	}
 
 }
