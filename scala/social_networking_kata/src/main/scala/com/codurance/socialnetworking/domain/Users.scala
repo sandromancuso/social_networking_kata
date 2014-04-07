@@ -44,7 +44,7 @@ class Users(clock: Clock) {
 	
 	private def wallFor(user: User): List[Post] = {
 		val posts_from_friends = user.followedUsers().map(u => u.allPosts()).get(0).get
-		(user.allPosts() ++ posts_from_friends).sortWith((p1, p2) => p1.date.getTime > p2.date.getTime)
+		(user.allPosts() ++ posts_from_friends).sortWith((p1, p2) => p1.date.isAfter(p2.date))
 	}
 
 }

@@ -1,19 +1,19 @@
 package com.codurance.socialnetworking.infrastructure
 
-import java.util.{Date, Calendar}
+import java.time.LocalDateTime
 
 class Clock {
 
-	def current_time(): Date = {
-		Clock now
+	def current_time(): LocalDateTime = {
+		LocalDateTime now()
 	}
 
 }
 
 object Clock {
 
-	def now(): Date = {
-		Calendar getInstance() getTime
+	def now(): LocalDateTime = {
+		LocalDateTime now
 	}
 
 }

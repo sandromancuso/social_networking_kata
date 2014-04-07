@@ -22,7 +22,7 @@ class SocialNetworking(view: View,
 
 object SocialNetworking extends App {
 
-	val view = new View(new Console, new PostFormatter)
+	val view = new View(new Console, new PostFormatter(new Clock))
 	val commandFactory = new CommandFactory(new Users(new Clock))
 	val userCommands = new UserCommands(commandFactory)
 	val socialNetworking = new SocialNetworking(view, userCommands)

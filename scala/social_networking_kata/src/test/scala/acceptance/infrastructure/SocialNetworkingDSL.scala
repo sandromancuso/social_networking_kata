@@ -9,6 +9,7 @@ import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import com.codurance.socialnetworking.infrastructure.Clock
 import java.util.{Date, Calendar}
+import java.time.LocalDateTime
 
 trait SocialNetworkingDSL extends MockitoSugar {
 
@@ -23,10 +24,10 @@ trait SocialNetworkingDSL extends MockitoSugar {
 		val console = mock[Console]
 		val clock = mock[Clock]
 		val userCommands = new UserCommands(new CommandFactory(new Users(clock)))
-		val view = new View(console, new PostFormatter)
+		val view = new View(console, new PostFormatter(clock))
 		val socialNetworking = new SocialNetworking(view, userCommands)
 		var consoleCommands: mutable.MutableList[String] = mutable.MutableList()
-		var clockTimes: mutable.MutableList[Date] = mutable.MutableList()
+		var clockTimes: mutable.MutableList[LocalDateTime] = mutable.MutableList()
 		var expectedMessages: mutable.MutableList[String] = mutable.MutableList()
 
 		def receives(userCommands: String*) = {
@@ -35,13 +36,13 @@ trait SocialNetworkingDSL extends MockitoSugar {
 
 		def receives(time_in_millis: Long = NOW, userCommand: String) = {
 			consoleCommands += userCommand
-			clockTimes += new Date(time_in_millis)
+			clockTimes += LocalDateTime.now()
 		}
 
 		def start() = {
 			consoleCommands += "quit"
 			when(console.readline()).thenReturn(consoleCommands.head, consoleCommands.tail:_*)
-			if (clockTimes.isEmpty) clockTimes += new Date()
+			if (clockTimes.isEmpty) clockTimes += LocalDateTime.now()
 			when(clock.current_time()) thenReturn(clockTimes.head, clockTimes.tail:_*)
 
 			socialNetworking start

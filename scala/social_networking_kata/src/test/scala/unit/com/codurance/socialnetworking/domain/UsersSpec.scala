@@ -6,6 +6,7 @@ import unit.com.codurance.socialnetworking.UnitSpec
 import com.codurance.socialnetworking.domain.Users
 import java.util.{Calendar, Date}
 import com.codurance.socialnetworking.infrastructure.Clock
+import java.time.LocalDateTime
 
 class UsersSpec extends UnitSpec {
 
@@ -36,8 +37,8 @@ class UsersSpec extends UnitSpec {
 
 	it should "return posts from a user and all the users she follows in reverse-chronological order" in new context {
 		users_receive(ALICE, ALICE_FIRST_POST, NOW)
-		users_receive(BOB, BOB_FIRST_POST, NOW + ONE_SECOND)
-		users_receive(ALICE, ALICE_SECOND_POST, NOW + TWO_SECONDS)
+		users_receive(BOB, BOB_FIRST_POST, NOW.plusSeconds(1))
+		users_receive(ALICE, ALICE_SECOND_POST, NOW.plusSeconds(2))
 
 		users follow(BOB, ALICE)
 
@@ -50,22 +51,15 @@ class UsersSpec extends UnitSpec {
 	}
 
 	trait context {
-		val NOW = new Date().getTime
-		val ONE_SECOND = 1000
-		val TWO_SECONDS = ONE_SECOND * 2
+		val NOW = LocalDateTime now
 		val clock = mock[Clock]
 		val users = new Users(clock)
 
-		def users_receive(user_name: String, post: String, time_in_millis: Long) {
-			timeIs(time_in_millis)
+		def users_receive(user_name: String, post: String, time: LocalDateTime) {
+			given(clock.current_time()) willReturn(time)
 			users newPost(user_name, post)
 		}
 
-		def timeIs(time_in_millis: Long) {
-			val calendar = Calendar getInstance()
-			calendar setTimeInMillis(time_in_millis)
-			given(clock.current_time()) willReturn(calendar getTime)
-		}
 	}
 
 	val NON_EXISTENT_USER = "non-existent user"

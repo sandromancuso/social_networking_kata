@@ -7,6 +7,7 @@ import unit.com.codurance.socialnetworking.UnitSpec
 import com.codurance.socialnetworking.user_interface.{PostFormatter, View, Console}
 import com.codurance.socialnetworking.domain.Post
 import java.util.Date
+import java.time.LocalDateTime
 
 class ViewSpec extends UnitSpec {
 
@@ -36,6 +37,6 @@ class ViewSpec extends UnitSpec {
 	}
 
 	val USER_COMMAND = "A user command"
-	val NOW = new Date()
+	val NOW = LocalDateTime now
 
 }

@@ -1,7 +1,9 @@
 package com.codurance.socialnetworking.domain
 
-import java.util.Date
+import java.time.LocalDateTime
 
-case class Post(user_name: String, message: String, date: Date = new Date) {
+case class Post(user_name: String,
+                message: String,
+                date: LocalDateTime = LocalDateTime.now()) {
 
 }
