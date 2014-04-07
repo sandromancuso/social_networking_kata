@@ -39,15 +39,18 @@ class UsersSpec extends UnitSpec {
 		users_receive(ALICE, ALICE_FIRST_POST, NOW)
 		users_receive(BOB, BOB_FIRST_POST, NOW.plusSeconds(1))
 		users_receive(ALICE, ALICE_SECOND_POST, NOW.plusSeconds(2))
+		users_receive(CHARLIE, CHARLIE_FIRST_POST, NOW.plusSeconds(5))
 
 		users follow(BOB, ALICE)
+		users follow(BOB, CHARLIE)
 
 		val posts = users wall(BOB)
 
-		posts.get.size should be (3)
-		posts.get(0).message should be (ALICE_SECOND_POST)
-		posts.get(1).message should be (BOB_FIRST_POST)
-		posts.get(2).message should be (ALICE_FIRST_POST)
+		posts.get.size should be (4)
+		posts.get(0).message should be (CHARLIE_FIRST_POST)
+		posts.get(1).message should be (ALICE_SECOND_POST)
+		posts.get(2).message should be (BOB_FIRST_POST)
+		posts.get(3).message should be (ALICE_FIRST_POST)
 	}
 
 	trait context {
@@ -70,8 +73,12 @@ class UsersSpec extends UnitSpec {
 	val SECOND_POST = "Second post"
 
 	val ALICE = "Alice"
-	val BOB = "Bob"
 	val ALICE_FIRST_POST = "Alice first post"
 	val ALICE_SECOND_POST = "Alice second post"
+
+	val BOB = "Bob"
 	val BOB_FIRST_POST = "Bob first post"
+
+	val CHARLIE = "Charlie"
+	val CHARLIE_FIRST_POST = "Charlie first post"
 }
