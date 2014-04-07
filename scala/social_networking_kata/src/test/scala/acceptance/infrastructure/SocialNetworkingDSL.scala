@@ -17,6 +17,7 @@ trait SocialNetworkingDSL extends MockitoSugar {
 	val NOW = LocalDateTime.now()
 	val ONE_SECOND_AGO = NOW.minusSeconds(1)
 	val TWO_SECONDS_AGO = NOW.minusSeconds(2)
+	val TEN_MINUTES_AGO = NOW.minusMinutes(10)
 
 	def fixture = new {
 

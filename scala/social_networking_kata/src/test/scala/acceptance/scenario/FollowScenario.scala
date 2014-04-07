@@ -14,7 +14,7 @@ class FollowScenario extends AcceptanceSpec {
 		scenario("User follows friends") {
 
 			Given("Charlie follows Alice")
-				application receives(NOW.minusMinutes(10), "Bob -> Hi, I'm Bob")
+				application receives(TEN_MINUTES_AGO, "Bob -> Hi, I'm Bob")
 				application receives(TWO_SECONDS_AGO, "Alice -> Hello, my name is Alice")
 				application receives(ONE_SECOND_AGO, "Charlie -> I'm in London today. Anyone up for a drink?")
 				application receives(NOW, "Alice -> It's a lovely day today")
