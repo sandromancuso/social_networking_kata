@@ -13,17 +13,25 @@ class PostingScenario extends AcceptanceSpec {
 
 		scenario("User posts messages") {
 
+			val twitter = app_context
+
 			Given("Alice posts messages")
-				application receives(TWO_SECONDS_AGO, "Alice -> Hello, my name is Alice")
-				application receives(NOW, "Alice -> It's a lovely day today")
+				twitter willReceive "Alice -> Hello, my name is Alice"
+				twitter willReceive "Alice -> It's a lovely day today"
 
 			When("Bob reads Alice's messages")
-				application receives bobReadsMessageFromAlice
+				twitter willReceive "Alice"
 
 			Then("Alice's messages are displayed in reverse-chronological order")
-				application start()
-				application displays("Alice - It's a lovely day today (just now)",
-						             "Alice - Hello, my name is Alice (2 seconds ago)")
+				twitter willReceive "exit"
+				twitter executeWith(twitter userCommands) should be(
+						"> " +
+						"> " +
+						"> " +
+					    "Alice - It's a lovely day today (just now)\n" +
+						"Alice - Hello, my name is Alice (just now)\n" +
+						"> bye!\n")
+
 		}
 	}
 

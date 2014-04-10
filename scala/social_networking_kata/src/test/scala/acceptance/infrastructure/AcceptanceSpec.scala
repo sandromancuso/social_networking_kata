@@ -20,7 +20,7 @@ abstract class AcceptanceSpec extends FeatureSpec
 
 		def executeWith(userCommands: List[String]): String = {
 			(
-				Seq("echo", userCommands.mkString("\r\n") + "\r\n") #|
+				Seq("echo", userCommands.reverse.mkString("\r\n") + "\r\n") #|
 				Seq("/usr/local/bin/scala",
 							"-cp",
 							"./target/scala-2.10/classes",

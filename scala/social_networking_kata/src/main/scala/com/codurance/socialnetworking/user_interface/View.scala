@@ -6,9 +6,8 @@ class View(console: Console, postFormatter: PostFormatter) {
 
 	val PROMPT = "> "
 
-	console print(PROMPT)
-
 	def userCommand(): String = {
+		console print(PROMPT)
 		console readline()
 	}
 
