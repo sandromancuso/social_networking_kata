@@ -4,16 +4,16 @@ import com.codurance.socialnetworking.user_interface.{View, UserCommands}
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.mockito.BDDMockito._
-import com.codurance.socialnetworking.SocialNetworking
+import com.codurance.socialnetworking.Twitter
 import com.codurance.socialnetworking.domain.{User, Post}
 import com.codurance.socialnetworking.infrastructure.Clock
 
-class SocialNetworkingSpec extends UnitSpec {
+class TwitterSpec extends UnitSpec {
 
-	"SocialNetworking" should "read user commands from the view" in new context {
+	"Twitter" should "read user commands from the view" in new context {
 		given(view userCommand) willReturn (ALICE_FIRST_POST_COMMAND, QUIT)
 
-		socialNetworking.start
+		twitter.start
 
 		verify(view, times(2)) userCommand()
 	}
@@ -21,7 +21,7 @@ class SocialNetworkingSpec extends UnitSpec {
 	it should ("execute the user's command") in new context {
 		given(view userCommand) willReturn (ALICE_FIRST_POST_COMMAND, QUIT)
 
-		socialNetworking.start
+		twitter.start
 
 		verify(userCommands) execute ALICE_FIRST_POST_COMMAND
 	}
@@ -31,7 +31,7 @@ class SocialNetworkingSpec extends UnitSpec {
 		val posts = List(Post(ALICE user_name, ALICE_FIRST_MESSAGE, Clock now))
 		given(userCommands execute(READ_COMMAND)) willReturn Some(posts)
 
-		socialNetworking.start
+		twitter.start
 
 		verify(view) display(posts)
 	}
@@ -45,7 +45,7 @@ class SocialNetworkingSpec extends UnitSpec {
 						 Post(ALICE user_name, ALICE_FIRST_MESSAGE, Clock now))
 		given(userCommands execute(READ_COMMAND)) willReturn Some(posts)
 
-		socialNetworking.start
+		twitter.start
 
 		verify(view) display(posts)
 	}
@@ -63,7 +63,7 @@ class SocialNetworkingSpec extends UnitSpec {
 		val userCommands = mock[UserCommands]
 		val view = mock[View]
 		given(userCommands execute(anyString())) willReturn None
-		val socialNetworking = new SocialNetworking(view, userCommands)
+		val twitter = new Twitter(view, userCommands)
 	}
 
 }

@@ -5,8 +5,7 @@ import com.codurance.socialnetworking.command.CommandFactory
 import com.codurance.socialnetworking.domain.Users
 import com.codurance.socialnetworking.infrastructure.Clock
 
-class SocialNetworking(view: View,
-                       userCommands: UserCommands) {
+class Twitter(view: View, userCommands: UserCommands) {
 
 	val QUIT = "quit"
 
@@ -20,13 +19,13 @@ class SocialNetworking(view: View,
 
 }
 
-object SocialNetworking extends App {
+object Twitter extends App {
 
 	val clock = new Clock
 	val view = new View(new Console, new PostFormatter(clock))
 	val commandFactory = new CommandFactory(new Users(clock))
 	val userCommands = new UserCommands(commandFactory)
-	val socialNetworking = new SocialNetworking(view, userCommands)
+	val twitter = new Twitter(view, userCommands)
 
-	socialNetworking start
+	twitter start
 }

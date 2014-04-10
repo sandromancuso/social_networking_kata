@@ -3,7 +3,7 @@ package acceptance.infrastructure
 import com.codurance.socialnetworking.user_interface.{PostFormatter, View, UserCommands, Console}
 import com.codurance.socialnetworking.command.CommandFactory
 import com.codurance.socialnetworking.domain.Users
-import com.codurance.socialnetworking.SocialNetworking
+import com.codurance.socialnetworking.Twitter
 import scala.collection.mutable
 import org.mockito.Mockito._
 import org.mockito.BDDMockito.given
@@ -59,7 +59,7 @@ trait SocialNetworkingDSL extends MockitoSugar {
 		def create_social_networking_app() = {
 			val userCommands = new UserCommands(new CommandFactory(new Users(users_clock)))
 			val view = new View(console, new PostFormatter(formatter_clock))
-			new SocialNetworking(view, userCommands)
+			new Twitter(view, userCommands)
 		}
 
 	}

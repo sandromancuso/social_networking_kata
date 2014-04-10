@@ -4,6 +4,10 @@ import com.codurance.socialnetworking.domain.Post
 
 class View(console: Console, postFormatter: PostFormatter) {
 
+	val PROMPT = "> "
+
+	console print(PROMPT)
+
 	def userCommand(): String = {
 		console readline()
 	}

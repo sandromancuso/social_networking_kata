@@ -10,11 +10,21 @@ import java.time.LocalDateTime
 
 class ViewSpec extends UnitSpec {
 
-	"View" should "read commands from the console" in new context {
+	"View" should "display console prompt when created" in {
+		val console = mock[Console]
+		val postFormatter = mock[PostFormatter]
+
+		new View(console, postFormatter)
+
+		verify(console) print("> ")
+	}
+
+	it should "read commands from the console" in new context {
 		given(console readline()) willReturn USER_COMMAND
 
 		view userCommand() should be(USER_COMMAND)
 
+		verify(console) print("> ")
 		verify(console) readline()
 	}
 
