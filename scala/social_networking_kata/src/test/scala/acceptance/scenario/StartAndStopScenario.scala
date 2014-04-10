@@ -12,7 +12,7 @@ class StartAndStopScenario extends AcceptanceSpec {
 		twitter willReceive "exit"
 
 		Then("The application should terminate")
-		twitter executeWith(twitter userCommands) should be("> bye!\n")
+		twitter outputFor(twitter userCommands) should be("> bye!\n")
 
 	}
 

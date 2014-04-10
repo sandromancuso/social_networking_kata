@@ -23,8 +23,7 @@ class PostingScenario extends AcceptanceSpec {
 				twitter willReceive "Alice"
 
 			Then("Alice's messages are displayed in reverse-chronological order")
-				twitter willReceive "exit"
-				twitter executeWith(twitter userCommands) should be(
+				twitter outputFor(twitter userCommands) should be(
 						"> " +
 						"> " +
 						"> " +

@@ -18,9 +18,9 @@ abstract class AcceptanceSpec extends FeatureSpec
 			userCommands ::= command
 		}
 
-		def executeWith(userCommands: List[String]): String = {
+		def outputFor(userCommands: List[String]): String = {
 			(
-				Seq("echo", userCommands.reverse.mkString("\r\n") + "\r\n") #|
+				Seq("echo", ("exit" :: userCommands).reverse.mkString("\r\n") + "\r\n") #|
 				Seq("/usr/local/bin/scala",
 							"-cp",
 							"./target/scala-2.10/classes",
