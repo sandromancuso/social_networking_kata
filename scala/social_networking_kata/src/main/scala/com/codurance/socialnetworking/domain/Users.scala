@@ -16,10 +16,9 @@ class Users(clock: Clock) {
 	}
 
 	def newPost(user_name: String, post_message: String) = {
-		val user = userBy(user_name)
-		val post = Post(user_name, post_message, clock.current_time())
+		val user = userBy(user_name)  // makes sure a user is created
+		val post = Post(user.user_name, post_message, clock.current_time())
 
-		user add post
 		post +=: posts
 	}
 

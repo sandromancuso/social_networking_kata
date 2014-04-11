@@ -7,8 +7,7 @@ import scala.sys.process._
 abstract class AcceptanceSpec extends FeatureSpec
 								 with MockitoSugar
 								 with GivenWhenThen
-								 with Matchers
-								 with SocialNetworkingDSL {
+								 with Matchers {
 
 	def app_context = new {
 
