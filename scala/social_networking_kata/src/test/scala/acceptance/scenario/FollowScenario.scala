@@ -1,6 +1,7 @@
 package acceptance.scenario
 
 import acceptance.infrastructure.AcceptanceSpec
+import acceptance.infrastructure.CustomMatchers._
 
 class FollowScenario extends AcceptanceSpec {
 
@@ -13,25 +14,34 @@ class FollowScenario extends AcceptanceSpec {
 
 		scenario("User follows friends") {
 
-			Given("Charlie follows Alice")
-				application receives(TEN_MINUTES_AGO, "Bob -> Hi, I'm Bob")
-				application receives(TWO_SECONDS_AGO, "Alice -> Hello, my name is Alice")
-				application receives(ONE_SECOND_AGO, "Charlie -> I'm in London today. Anyone up for a drink?")
-				application receives(NOW, "Alice -> It's a lovely day today")
+			val twitter = app_context
 
-				application receives "Charlie follows Alice"
-				application receives "Charlie follows Bob"
+			Given("Charlie follows Alice")
+				twitter willReceive "Bob -> Hi, I'm Bob"
+				twitter willReceive "Alice -> Hello, my name is Alice"
+				twitter willReceive "Charlie -> I'm in London today. Anyone up for a drink?"
+				twitter willReceive "Alice -> It's a lovely day today"
+
+				twitter willReceive "Charlie follows Alice"
+				twitter willReceive "Charlie follows Bob"
 
 			When("Charlie checks his wall")
- 	            application receives (NOW, "Charlie wall")
+ 	            twitter willReceive "Charlie wall"
 
 			Then("Charlie sees Alice's messages and his messages in reverse-chronological order")
-				application start()
- 	            application displays(
-		                "Alice - It's a lovely day today (just now)",
-		                "Charlie - I'm in London today. Anyone up for a drink? (1 second ago)",
-		                "Alice - Hello, my name is Alice (2 seconds ago)",
-		                "Bob - Hi, I'm Bob (10 minutes ago)")
+				twitter outputFor(twitter userCommands) should matchOutput(
+						"> " +
+						"> " +
+						"> " +
+						"> " +
+						"> " +
+						"> " +
+						"> " +
+		                "Alice - It's a lovely day today \n" +
+		                "Charlie - I'm in London today. Anyone up for a drink? \n" +
+		                "Alice - Hello, my name is Alice \n" +
+		                "Bob - Hi, I'm Bob \n" +
+						"> bye!\n")
 		}
 
 	}

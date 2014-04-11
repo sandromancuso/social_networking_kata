@@ -1,6 +1,7 @@
 package acceptance.scenario
 
 import acceptance.infrastructure.AcceptanceSpec
+import acceptance.infrastructure.CustomMatchers._
 
 class PostingScenario extends AcceptanceSpec {
 
@@ -23,12 +24,12 @@ class PostingScenario extends AcceptanceSpec {
 				twitter willReceive "Alice"
 
 			Then("Alice's messages are displayed in reverse-chronological order")
-				twitter outputFor(twitter userCommands) should be(
+				twitter outputFor(twitter userCommands) should matchOutput(
 						"> " +
 						"> " +
 						"> " +
-					    "Alice - It's a lovely day today (just now)\n" +
-						"Alice - Hello, my name is Alice (just now)\n" +
+					    "Alice - It's a lovely day today \n" +
+						"Alice - Hello, my name is Alice \n" +
 						"> bye!\n")
 
 		}

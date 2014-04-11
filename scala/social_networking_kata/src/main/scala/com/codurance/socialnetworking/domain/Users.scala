@@ -6,10 +6,11 @@ import com.codurance.socialnetworking.infrastructure.Clock
 class Users(clock: Clock) {
 
 	val users: mutable.HashMap[String, User] = mutable.HashMap()
+	val posts: mutable.MutableList[Post] = mutable.MutableList()
 
 	def postsBy(user_name: String): Option[List[Post]] = {
 		users.get(user_name) match {
-			case Some(user) => Some(user allPosts)
+			case Some(user) => Some(posts.filter(_.isFrom(user)).toList)
 			case _ => None
 		}
 	}
@@ -19,6 +20,7 @@ class Users(clock: Clock) {
 		val post = Post(user_name, post_message, clock.current_time())
 
 		user add post
+		post +=: posts
 	}
 
 	def follow(user_name: String, user_name_to_be_followed: String) = {
@@ -27,9 +29,13 @@ class Users(clock: Clock) {
 
 	def wall(user_name: String): Option[List[Post]] = {
 		users.get(user_name) match {
-			case Some(user) => Some(wallFor(user))
-			case _ => None
+			case Some(user) => Some(posts.filter(p => isWallPost(user, p)).toList)
+			case _          => None
 		}
+	}
+
+	private def isWallPost(user: User, post: Post): Boolean = {
+		post.isFrom(user) || post.isFromOneOf(user.followedUsers():_*)
 	}
 
 	private def userBy(user_name: String): User = {
@@ -42,9 +48,4 @@ class Users(clock: Clock) {
 		new_user
 	}
 	
-	private def wallFor(user: User): List[Post] = {
-		val posts_from_friends = user.followedUsers().map(u => u.allPosts()).flatten
-		(user.allPosts() ++ posts_from_friends).sortWith((p1, p2) => p1.date.isAfter(p2.date))
-	}
-
 }

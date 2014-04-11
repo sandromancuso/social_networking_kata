@@ -6,7 +6,9 @@ import unit.com.codurance.socialnetworking.UnitSpec
 import com.codurance.socialnetworking.domain.Users
 import java.util.Calendar
 import com.codurance.socialnetworking.infrastructure.Clock
-import java.time.LocalDateTime
+import java.time.{Instant, LocalDateTime}
+import acceptance.infrastructure.CustomMatchers._
+import java.time.temporal.{ChronoField, TemporalField}
 
 class UsersSpec extends UnitSpec {
 
@@ -51,6 +53,24 @@ class UsersSpec extends UnitSpec {
 		posts.get(1).message should be (ALICE_SECOND_POST)
 		posts.get(2).message should be (BOB_FIRST_POST)
 		posts.get(3).message should be (ALICE_FIRST_POST)
+	}
+
+	it should "return posts in reverse-chronological order" in {
+		val users = new Users(new Clock)
+		users newPost("Bob",     "Hi, I'm Bob")
+		users newPost("Alice",   "Hello, my name is Alice")
+		users newPost("Charlie", "I'm in London today. Anyone up for a drink?")
+		users newPost("Alice",   "It's a lovely day today")
+
+		users follow("Charlie", "Alice")
+		users follow("Charlie", "Bob")
+
+		val posts = users wall "Charlie"
+
+		posts.get(0).message shouldBe "It's a lovely day today"
+		posts.get(1).message shouldBe "I'm in London today. Anyone up for a drink?"
+		posts.get(2).message shouldBe "Hello, my name is Alice"
+		posts.get(3).message shouldBe "Hi, I'm Bob"
 	}
 
 	trait context {
